@@ -18,7 +18,7 @@ const PrivacyPolicy = () => {
           <section className="mb-8">
             <h2 className="text-2xl font-semibold text-gray-900 mb-4">1. Introduction</h2>
             <p className="text-gray-600 mb-4">
-              Welcome to <strong>WhatsApp TaxBot</strong> (the “Service”) operated by <strong>Tko Motions</strong> (“we”, “us”, “our”). We are committed to protecting your privacy and processing your personal data in accordance with the <strong>Nigeria Data Protection Act 2023 (NDPA)</strong> and other applicable laws.  
+              Welcome to <strong>WhatsApp TaxBot</strong> (the “Service”) operated by <strong>Paayam </strong> (“we”, “us”, “our”). We are committed to protecting your privacy and processing your personal data in accordance with the <strong>Nigeria Data Protection Act 2023 (NDPA)</strong> and other applicable laws.  
               By using our Service, you agree to the collection and use of information as described in this Privacy Policy.
             </p>
           </section>

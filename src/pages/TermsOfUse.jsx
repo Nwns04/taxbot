@@ -92,8 +92,8 @@ const TermsOfUse = () => {
                 For questions about these Terms of Use, please contact us:
               </p>
               <div className="bg-gray-50 p-4 rounded-lg">
-                <p className="text-gray-600">Email: legal@taxbot.com</p>
-                <p className="text-gray-600">WhatsApp: +1234567890</p>
+                <p className="text-gray-600">Email: support@paayam.com</p>
+                <p className="text-gray-600">WhatsApp: +2347040739828</p>
               </div>
             </section>
           </div>
