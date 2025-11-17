@@ -34,8 +34,7 @@ const Home = () => {
               Your Personal <span className="text-primary-600">Tax Assistant</span> on WhatsApp
             </h1>
             <p className="text-xl text-gray-600 mb-8 max-w-3xl mx-auto">
-              Get instant help with tax calculations, compliance, and expert guidance through WhatsApp. 
-              Simple, secure, and always available.
+              TaxBot Naija is a product of Tko Motions, designed to make tax calculations, compliance and guidance effortless for individuals and businesses.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <a
@@ -65,7 +64,7 @@ const Home = () => {
               Why Choose TaxBot?
             </h2>
             <p className="text-xl text-gray-600 max-w-2xl mx-auto">
-              Experience the future of tax assistance with our intelligent WhatsApp bot
+              Experience the future of tax assistance with our intelligent WhatsApp bot powered by Tko Motions.
             </p>
           </div>
           
@@ -92,7 +91,7 @@ const Home = () => {
             Ready to Simplify Your Taxes?
           </h2>
           <p className="text-xl text-gray-600 mb-8">
-            Start chatting with TaxBot today and get instant help with all your tax needs.
+            Start chatting with TaxBot today and get instant help with all your tax needs. Powered and operated by Tko Motions.
           </p>
           <a
             href="https://wa.me/your-number-here"
@@ -107,6 +106,11 @@ const Home = () => {
           </div>
         </div>
       </section>
+
+      {/* Footer Company Attribution */}
+      <footer className="py-10 text-center text-gray-500 text-sm">
+        <p>TaxBot Naija is a registered product of Tko Motions.</p>
+      </footer>
     </div>
   );
 };
