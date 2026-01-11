@@ -43,7 +43,7 @@ const Footer = () => {
             <ul className="mt-4 space-y-4">
               <li>
                 <a 
-                  href="https://wa.me/your-number-here" 
+                  href="https://wa.me/message/D2JFI2L3P5CMM1" 
                   target="_blank" 
                   rel="noopener noreferrer"
                   className="text-base text-gray-300 hover:text-white transition-colors duration-200"

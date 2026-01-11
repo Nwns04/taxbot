@@ -38,7 +38,7 @@ const Home = () => {
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <a
-                href="https://wa.me/your-number-here"
+                href="https://wa.me/message/D2JFI2L3P5CMM1"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="btn-primary text-lg px-8 py-4"
@@ -94,7 +94,7 @@ const Home = () => {
             Start chatting with TaxBot today and get instant help with all your tax needs. Powered and operated by Tko Motions.
           </p>
           <a
-            href="https://wa.me/your-number-here"
+            href="https://wa.me/message/D2JFI2L3P5CMM1"
             target="_blank"
             rel="noopener noreferrer"
             className="btn-primary text-lg px-8 py-4 inline-block"

@@ -42,7 +42,7 @@ const Header = () => {
               </Link>
             ))}
             <a
-              href="https://wa.me/your-number-here"
+              href="https://wa.me/message/D2JFI2L3P5CMM1"
               target="_blank"
               rel="noopener noreferrer"
               className="btn-primary"
@@ -87,7 +87,7 @@ const Header = () => {
                 </Link>
               ))}
               <a
-                href="https://wa.me/your-number-here"
+                href="https://wa.me/message/D2JFI2L3P5CMM1"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="block w-full text-center btn-primary mt-2"
