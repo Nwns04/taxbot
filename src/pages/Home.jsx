@@ -1,18 +1,6 @@
-import { useState } from "react";
 import { Link } from "react-router-dom";
 
 const Home = () => {
-  const [form, setForm] = useState({
-    name: "",
-    email: "",
-  });
-
-  const [status, setStatus] = useState({
-    loading: false,
-    success: "",
-    error: "",
-  });
-
   const features = [
     {
       title: "Tax Calculations",
@@ -39,85 +27,6 @@ const Home = () => {
       icon: "✅",
     },
   ];
-
-  const handleChange = (event) => {
-    const { name, value } = event.target;
-
-    setForm((current) => ({
-      ...current,
-      [name]: value,
-    }));
-
-    setStatus({
-      loading: false,
-      success: "",
-      error: "",
-    });
-  };
-
-  const handleSubmit = async (event) => {
-    event.preventDefault();
-
-    const name = form.name.trim();
-    const email = form.email.trim().toLowerCase();
-
-    if (!name || !email) {
-      setStatus({
-        loading: false,
-        success: "",
-        error: "Please enter your name and email address.",
-      });
-      return;
-    }
-
-    try {
-      setStatus({
-        loading: true,
-        success: "",
-        error: "",
-      });
-
-      const apiBase =
-        import.meta.env.VITE_API_URL || "http://localhost:3000/api";
-
-      const response = await fetch(`${apiBase}/waitlist`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          name,
-          email,
-        }),
-      });
-
-      const data = await response.json();
-
-      if (!response.ok) {
-        throw new Error(data?.message || "Could not join waitlist.");
-      }
-
-      setForm({
-        name: "",
-        email: "",
-      });
-
-      setStatus({
-        loading: false,
-        success:
-          "You’re on the early access list. Please check your email for confirmation.",
-        error: "",
-      });
-    } catch (error) {
-      setStatus({
-        loading: false,
-        success: "",
-        error:
-          error.message ||
-          "Something went wrong. Please try again in a few minutes.",
-      });
-    }
-  };
 
   return (
     <div className="bg-white">
@@ -195,9 +104,7 @@ const Home = () => {
                   {feature.title}
                 </h3>
 
-                <p className="text-gray-600">
-                  {feature.description}
-                </p>
+                <p className="text-gray-600">{feature.description}</p>
               </div>
             ))}
           </div>
@@ -228,7 +135,39 @@ const Home = () => {
               </p>
             </div>
 
-            <form onSubmit={handleSubmit} className="space-y-5">
+            <form
+              action="https://formsubmit.co/topekehinde@taxbotnaija.com"
+              method="POST"
+              className="space-y-5"
+            >
+              <input
+                type="hidden"
+                name="_subject"
+                value="New TaxBotNaija Early Access Signup"
+              />
+
+              <input type="hidden" name="_template" value="table" />
+
+              <input
+                type="hidden"
+                name="_autoresponse"
+                value="Thank you for joining the TaxBotNaija early access list. We are preparing a secure web workspace for Nigerian tax calculations, records, bank-data import, reports, and compliance support. We will notify you when access opens."
+              />
+
+              <input
+                type="hidden"
+                name="_captcha"
+                value="false"
+              />
+
+              <input
+                type="text"
+                name="_honey"
+                style={{ display: "none" }}
+                tabIndex="-1"
+                autoComplete="off"
+              />
+
               <div>
                 <label
                   htmlFor="name"
@@ -241,8 +180,7 @@ const Home = () => {
                   id="name"
                   name="name"
                   type="text"
-                  value={form.name}
-                  onChange={handleChange}
+                  required
                   placeholder="Enter your full name"
                   className="w-full rounded-xl border border-gray-300 px-4 py-3 text-gray-900 outline-none focus:border-lime-600 focus:ring-4 focus:ring-lime-100"
                 />
@@ -260,31 +198,17 @@ const Home = () => {
                   id="email"
                   name="email"
                   type="email"
-                  value={form.email}
-                  onChange={handleChange}
+                  required
                   placeholder="you@example.com"
                   className="w-full rounded-xl border border-gray-300 px-4 py-3 text-gray-900 outline-none focus:border-lime-600 focus:ring-4 focus:ring-lime-100"
                 />
               </div>
 
-              {status.error && (
-                <div className="rounded-xl border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-700">
-                  {status.error}
-                </div>
-              )}
-
-              {status.success && (
-                <div className="rounded-xl border border-lime-200 bg-lime-50 px-4 py-3 text-sm text-lime-800">
-                  {status.success}
-                </div>
-              )}
-
               <button
                 type="submit"
-                disabled={status.loading}
-                className="w-full rounded-xl bg-lime-600 px-6 py-4 text-lg font-semibold text-white hover:bg-lime-700 disabled:cursor-not-allowed disabled:opacity-70 transition-colors"
+                className="w-full rounded-xl bg-lime-600 px-6 py-4 text-lg font-semibold text-white hover:bg-lime-700 transition-colors"
               >
-                {status.loading ? "Joining..." : "Join Waitlist"}
+                Join Waitlist
               </button>
 
               <p className="text-center text-sm text-gray-500">
@@ -323,7 +247,7 @@ const Home = () => {
             </Link>
 
             <a
-              href="mailto:support@taxbotnaija.com"
+              href="mailto:topekehinde@taxbotnaija.com"
               className="text-gray-600 hover:text-lime-700"
             >
               Contact
