@@ -1,80 +1,200 @@
-import { Link } from 'react-router-dom';
+import { useState } from "react";
+import { Link } from "react-router-dom";
 
 const Home = () => {
+  const [form, setForm] = useState({
+    name: "",
+    email: "",
+  });
+
+  const [status, setStatus] = useState({
+    loading: false,
+    success: "",
+    error: "",
+  });
+
   const features = [
     {
-      title: 'Instant Tax Calculations',
-      description: 'Get quick and accurate tax calculations for various scenarios.',
-      icon: '🧮'
+      title: "Tax Calculations",
+      description:
+        "Estimate PAYE, VAT, business tax, personal income tax, and related Nigerian tax obligations.",
+      icon: "🧮",
     },
     {
-      title: '24/7 Availability',
-      description: 'Our WhatsApp bot is available round the clock to assist you.',
-      icon: '⏰'
+      title: "Records Workspace",
+      description:
+        "Organise receipts, invoices, payslips, bank statements, and tax documents in one secure place.",
+      icon: "📁",
     },
     {
-      title: 'Expert Guidance',
-      description: 'Professional tax advice and compliance guidance at your fingertips.',
-      icon: '💼'
+      title: "Bank Data Import",
+      description:
+        "Prepare for secure account connection and transaction classification through approved providers.",
+      icon: "🏦",
     },
     {
-      title: 'Secure & Private',
-      description: 'Your financial data is protected with enterprise-grade security.',
-      icon: '🔒'
-    }
+      title: "Compliance Support",
+      description:
+        "Prepare reports, track reminders, review records, and request human support where needed.",
+      icon: "✅",
+    },
   ];
 
+  const handleChange = (event) => {
+    const { name, value } = event.target;
+
+    setForm((current) => ({
+      ...current,
+      [name]: value,
+    }));
+
+    setStatus({
+      loading: false,
+      success: "",
+      error: "",
+    });
+  };
+
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+
+    const name = form.name.trim();
+    const email = form.email.trim().toLowerCase();
+
+    if (!name || !email) {
+      setStatus({
+        loading: false,
+        success: "",
+        error: "Please enter your name and email address.",
+      });
+      return;
+    }
+
+    try {
+      setStatus({
+        loading: true,
+        success: "",
+        error: "",
+      });
+
+      const apiBase =
+        import.meta.env.VITE_API_URL || "http://localhost:3000/api";
+
+      const response = await fetch(`${apiBase}/waitlist`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          name,
+          email,
+        }),
+      });
+
+      const data = await response.json();
+
+      if (!response.ok) {
+        throw new Error(data?.message || "Could not join waitlist.");
+      }
+
+      setForm({
+        name: "",
+        email: "",
+      });
+
+      setStatus({
+        loading: false,
+        success:
+          "You’re on the early access list. Please check your email for confirmation.",
+        error: "",
+      });
+    } catch (error) {
+      setStatus({
+        loading: false,
+        success: "",
+        error:
+          error.message ||
+          "Something went wrong. Please try again in a few minutes.",
+      });
+    }
+  };
+
   return (
-    <div>
-      {/* Hero Section */}
-      <section className="bg-gradient-to-br from-primary-50 to-blue-100 py-20">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center">
-            <h1 className="text-4xl md:text-6xl font-bold text-gray-900 mb-6">
-              Your Personal <span className="text-primary-600">Tax Assistant</span> on WhatsApp
+    <div className="bg-white">
+      {/* Section 1: Hero */}
+      <section className="relative overflow-hidden bg-gradient-to-br from-lime-50 via-white to-emerald-50 py-24">
+        <div className="absolute -top-24 -right-24 h-72 w-72 rounded-full bg-lime-200/40 blur-3xl" />
+        <div className="absolute -bottom-24 -left-24 h-72 w-72 rounded-full bg-emerald-200/40 blur-3xl" />
+
+        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="max-w-4xl mx-auto text-center">
+            <div className="inline-flex items-center rounded-full bg-lime-100 px-4 py-2 text-sm font-medium text-lime-800 mb-6">
+              Secure Nigerian tax workspace preparing for launch
+            </div>
+
+            <h1 className="text-4xl md:text-6xl font-bold text-gray-950 mb-6 leading-tight">
+              Simplify Nigerian Tax Compliance from{" "}
+              <span className="text-lime-700">One Secure Workspace</span>
             </h1>
+
             <p className="text-xl text-gray-600 mb-8 max-w-3xl mx-auto">
-              TaxBot Naija is a product of Tko Motions, designed to make tax calculations, compliance and guidance effortless for individuals and businesses.
+              TaxBotNaija helps individuals and businesses calculate taxes,
+              organise records, import financial data, prepare reports, and stay
+              compliant with Nigerian tax obligations.
             </p>
+
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <a
-                href="https://wa.me/message/D2JFI2L3P5CMM1"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="btn-primary text-lg px-8 py-4"
+                href="#early-access"
+                className="inline-flex items-center justify-center rounded-xl bg-lime-600 px-8 py-4 text-lg font-semibold text-white shadow-sm hover:bg-lime-700 transition-colors"
               >
-                💬 Start Chat on WhatsApp
+                Join Early Access
               </a>
+
               <Link
                 to="/privacy"
-                className="btn-secondary text-lg px-8 py-4"
+                className="inline-flex items-center justify-center rounded-xl border border-lime-200 bg-white px-8 py-4 text-lg font-semibold text-lime-800 hover:bg-lime-50 transition-colors"
               >
-                📄 Privacy Policy
+                View Privacy Policy
               </Link>
             </div>
           </div>
         </div>
       </section>
 
-      {/* Features Section */}
+      {/* Section 2: Platform Features */}
       <section className="py-20 bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
-            <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
-              Why Choose TaxBot?
+            <p className="text-lime-700 font-semibold mb-3">
+              What TaxBotNaija is building
+            </p>
+
+            <h2 className="text-3xl md:text-4xl font-bold text-gray-950 mb-4">
+              A Web Interface for Tax Records, Reports, and Compliance
             </h2>
-            <p className="text-xl text-gray-600 max-w-2xl mx-auto">
-              Experience the future of tax assistance with our intelligent WhatsApp bot powered by Tko Motions.
+
+            <p className="text-xl text-gray-600 max-w-3xl mx-auto">
+              We are moving beyond chat flows into a structured web platform for
+              Nigerian tax support, secure records, bank-data import, and guided
+              compliance workflows.
             </p>
           </div>
-          
+
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-            {features.map((feature, index) => (
-              <div key={index} className="text-center p-6 rounded-lg hover:shadow-lg transition-shadow duration-300">
-                <div className="text-4xl mb-4">{feature.icon}</div>
-                <h3 className="text-xl font-semibold text-gray-900 mb-3">
+            {features.map((feature) => (
+              <div
+                key={feature.title}
+                className="rounded-2xl border border-lime-100 bg-gradient-to-b from-lime-50/70 to-white p-6 shadow-sm hover:shadow-md transition-shadow"
+              >
+                <div className="mb-5 flex h-14 w-14 items-center justify-center rounded-2xl bg-lime-100 text-3xl">
+                  {feature.icon}
+                </div>
+
+                <h3 className="text-xl font-semibold text-gray-950 mb-3">
                   {feature.title}
                 </h3>
+
                 <p className="text-gray-600">
                   {feature.description}
                 </p>
@@ -84,32 +204,132 @@ const Home = () => {
         </div>
       </section>
 
-      {/* CTA Section */}
-      <section className="py-20 bg-gray-50">
-        <div className="max-w-4xl mx-auto text-center px-4 sm:px-6 lg:px-8">
-          <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-6">
-            Ready to Simplify Your Taxes?
-          </h2>
-          <p className="text-xl text-gray-600 mb-8">
-            Start chatting with TaxBot today and get instant help with all your tax needs. Powered and operated by Tko Motions.
-          </p>
-          <a
-            href="https://wa.me/message/D2JFI2L3P5CMM1"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="btn-primary text-lg px-8 py-4 inline-block"
-          >
-            💬 Chat Now on WhatsApp
-          </a>
-          <div className="mt-6 text-sm text-gray-500">
-            <p>No downloads required • Works on any device • 100% Free to start</p>
+      {/* Section 3: Early Access Form */}
+      <section
+        id="early-access"
+        className="py-20 bg-gradient-to-br from-lime-950 via-emerald-950 to-gray-950"
+      >
+        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="rounded-3xl bg-white p-8 md:p-12 shadow-2xl">
+            <div className="text-center mb-10">
+              <p className="text-lime-700 font-semibold mb-3">
+                Early Access
+              </p>
+
+              <h2 className="text-3xl md:text-4xl font-bold text-gray-950 mb-4">
+                Join the TaxBotNaija Waitlist
+              </h2>
+
+              <p className="text-lg text-gray-600 max-w-2xl mx-auto">
+                We are preparing a secure web workspace for Nigerian tax
+                calculations, records, bank-data import, reports, and compliance
+                support. Join the waitlist and we will notify you when access
+                opens.
+              </p>
+            </div>
+
+            <form onSubmit={handleSubmit} className="space-y-5">
+              <div>
+                <label
+                  htmlFor="name"
+                  className="block text-sm font-semibold text-gray-800 mb-2"
+                >
+                  Full name
+                </label>
+
+                <input
+                  id="name"
+                  name="name"
+                  type="text"
+                  value={form.name}
+                  onChange={handleChange}
+                  placeholder="Enter your full name"
+                  className="w-full rounded-xl border border-gray-300 px-4 py-3 text-gray-900 outline-none focus:border-lime-600 focus:ring-4 focus:ring-lime-100"
+                />
+              </div>
+
+              <div>
+                <label
+                  htmlFor="email"
+                  className="block text-sm font-semibold text-gray-800 mb-2"
+                >
+                  Email address
+                </label>
+
+                <input
+                  id="email"
+                  name="email"
+                  type="email"
+                  value={form.email}
+                  onChange={handleChange}
+                  placeholder="you@example.com"
+                  className="w-full rounded-xl border border-gray-300 px-4 py-3 text-gray-900 outline-none focus:border-lime-600 focus:ring-4 focus:ring-lime-100"
+                />
+              </div>
+
+              {status.error && (
+                <div className="rounded-xl border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-700">
+                  {status.error}
+                </div>
+              )}
+
+              {status.success && (
+                <div className="rounded-xl border border-lime-200 bg-lime-50 px-4 py-3 text-sm text-lime-800">
+                  {status.success}
+                </div>
+              )}
+
+              <button
+                type="submit"
+                disabled={status.loading}
+                className="w-full rounded-xl bg-lime-600 px-6 py-4 text-lg font-semibold text-white hover:bg-lime-700 disabled:cursor-not-allowed disabled:opacity-70 transition-colors"
+              >
+                {status.loading ? "Joining..." : "Join Waitlist"}
+              </button>
+
+              <p className="text-center text-sm text-gray-500">
+                By joining the waitlist, you agree to receive early-access
+                updates from TaxBotNaija. Your information will be processed
+                according to our{" "}
+                <Link to="/privacy" className="text-lime-700 hover:underline">
+                  Privacy Policy
+                </Link>{" "}
+                and{" "}
+                <Link to="/terms" className="text-lime-700 hover:underline">
+                  Terms of Use
+                </Link>
+                .
+              </p>
+            </form>
           </div>
         </div>
       </section>
 
-      {/* Footer Company Attribution */}
-      <footer className="py-10 text-center text-gray-500 text-sm">
-        <p>TaxBot Naija is a registered product of Tko Motions.</p>
+      {/* Footer */}
+      <footer className="border-t border-lime-100 bg-white py-10">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+          <p className="text-sm text-gray-500 mb-4">
+            TaxBotNaija is operated by TKO Motions. Built for Nigerian tax
+            calculations, records, reporting, and compliance support.
+          </p>
+
+          <div className="flex flex-wrap items-center justify-center gap-4 text-sm">
+            <Link to="/privacy" className="text-gray-600 hover:text-lime-700">
+              Privacy Policy
+            </Link>
+
+            <Link to="/terms" className="text-gray-600 hover:text-lime-700">
+              Terms of Use
+            </Link>
+
+            <a
+              href="mailto:support@taxbotnaija.com"
+              className="text-gray-600 hover:text-lime-700"
+            >
+              Contact
+            </a>
+          </div>
+        </div>
       </footer>
     </div>
   );
