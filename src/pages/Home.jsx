@@ -1,6 +1,10 @@
-import { Link } from "react-router-dom";
+import { useRef } from "react";
+import { Link, useNavigate } from "react-router-dom";
 
 const Home = () => {
+  const navigate = useNavigate();
+  const redirectTimerRef = useRef(null);
+
   const features = [
     {
       title: "Tax Calculations",
@@ -28,8 +32,25 @@ const Home = () => {
     },
   ];
 
+  const handleWaitlistSubmit = () => {
+    if (redirectTimerRef.current) {
+      clearTimeout(redirectTimerRef.current);
+    }
+
+    redirectTimerRef.current = setTimeout(() => {
+      navigate("/thank-you");
+    }, 1800);
+  };
+
   return (
     <div className="bg-white">
+      {/* Hidden FormSubmit result target */}
+      <iframe
+        name="waitlist-submit-frame"
+        title="Waitlist submission"
+        className="hidden"
+      />
+
       {/* Section 1: Hero */}
       <section className="relative overflow-hidden bg-gradient-to-br from-lime-50 via-white to-emerald-50 py-24">
         <div className="absolute -top-24 -right-24 h-72 w-72 rounded-full bg-lime-200/40 blur-3xl" />
@@ -138,6 +159,8 @@ const Home = () => {
             <form
               action="https://formsubmit.co/topekehinde@taxbotnaija.com"
               method="POST"
+              target="waitlist-submit-frame"
+              onSubmit={handleWaitlistSubmit}
               className="space-y-5"
             >
               <input
@@ -146,12 +169,7 @@ const Home = () => {
                 value="New TaxBotNaija Early Access Signup"
               />
 
-            <input
-    type="hidden"
-    name="_next"
-    value="https://www.taxbotnaija.com/thank-you"
-  />
-
+              <input type="hidden" name="_template" value="table" />
 
               <input
                 type="hidden"
@@ -159,11 +177,7 @@ const Home = () => {
                 value="Thank you for joining the TaxBotNaija early access list. We are preparing a secure web workspace for Nigerian tax calculations, records, bank-data import, reports, and compliance support. We will notify you when access opens."
               />
 
-              <input
-                type="hidden"
-                name="_captcha"
-                value="false"
-              />
+              <input type="hidden" name="_captcha" value="false" />
 
               <input
                 type="text"
