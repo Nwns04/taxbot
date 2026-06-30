@@ -146,7 +146,12 @@ const Home = () => {
                 value="New TaxBotNaija Early Access Signup"
               />
 
-              <input type="hidden" name="_template" value="table" />
+            <input
+    type="hidden"
+    name="_next"
+    value="https://www.taxbotnaija.com/thank-you"
+  />
+
 
               <input
                 type="hidden"
